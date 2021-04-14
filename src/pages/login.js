@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import './login.css';
 
 const IconFont = createFromIconfontCN({
-  scriptUrl:'//at.alicdn.com/t/font_2487842_h4iowivkm8r.js',
+  scriptUrl:'//at.alicdn.com/t/font_2487842_uleaa2uzsw.js',
 });
 
 class Login extends React.Component {
@@ -46,10 +46,63 @@ class Login extends React.Component {
             >注册</div>
           </div>
         </div>
-        <div className="login-c" style={{display:this.state.login}}>login
-          <Input bordered={false} size="large" prefix={<IconFont type="icon-mimajiesuo" />}></Input>
+        <div className="login-c" style={{display:this.state.login}}>
+          <div className="primeFooter">
+            <div className="primeHeader2" style={{fontSize: '25px',top: '10%',color: '#015266',zIndex: '2'}}>欢迎回来</div>
+            <div className="loginForm">
+              <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
+                <Input 
+                  bordered={false} 
+                  size="large" 
+                  prefix={<IconFont type="icon-ic_user_platform" style={{fontSize: '25px',color: '#015266'}} />}
+                ></Input>
+              </div>
+              <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
+                <Input 
+                  bordered={false} 
+                  size="large" 
+                  prefix={<IconFont type="icon-mimajiesuo" style={{fontSize: '25px',color: '#015266'}} />}
+                ></Input>
+              </div>
+              <div 
+                className="loginButton" 
+                style={{transform: ['translate(-50%,100%)'],color: '#FFFFFF',backgroundColor: '#015266'}}
+              >登陆</div>
+            </div>
+          </div>
         </div>
-        <div className="register" style={{display:this.state.register}}>register</div>
+        <div className="register" style={{display:this.state.register}}>
+        <div className="primeFooter">
+            <div className="primeHeader2" style={{fontSize: '25px',top: '10%',color: '#015266',zIndex: '2'}}>新用户？你好！</div>
+            <div className="loginForm">
+              <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
+                <Input 
+                  bordered={false} 
+                  size="large" 
+                  prefix={<IconFont type="icon-ic_user_platform" style={{fontSize: '25px',color: '#015266'}} />}
+                ></Input>
+              </div>
+              <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
+                <Input 
+                  bordered={false} 
+                  size="large" 
+                  prefix={<IconFont type="icon-mimajiesuo" style={{fontSize: '25px',color: '#015266'}} />}
+                ></Input>
+              </div>
+              <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
+                <Input 
+                  bordered={false} 
+                  size="large" 
+                  prefix={<IconFont type="icon-mimajiesuo" style={{fontSize: '25px',color: '#015266'}} />}
+                ></Input>
+              </div>
+              <div 
+                className="loginButton" 
+                style={{transform: ['translate(-50%,100%)'],color: '#FFFFFF',backgroundColor: '#015266'}}
+              >注册</div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
