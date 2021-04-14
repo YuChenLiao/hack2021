@@ -66,11 +66,12 @@
 
 .dataSpan {
   height: 100%;
-  width: 40%;
+  width: 45%;
+  border-radius: 15px;
   background-color: chocolate;
   text-align: center;
   display: inline-block;
-  margin-left: 5%;
+  margin-left: 2%;
   margin-right: 3%;
 }
 
