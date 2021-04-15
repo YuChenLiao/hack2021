@@ -45,6 +45,15 @@ class Login extends React.Component {
       message.error('注册失败');
     }
   };
+  Login = async() =>{
+    const res = await request.post(' /user/login', this.state.loginForm)
+    localStorage.setItem('token',res.data.data.token);
+    if(res.data.data.token) {
+      this.props.history.push('/firstPage')
+    } else {
+      message.error('登陆失败')
+    }
+  }
   onChangeUser = ({ target: { value } }) => {
     this.setState({ loginForm:{
       userName: value,
@@ -85,6 +94,8 @@ class Login extends React.Component {
               <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
                 <Input 
                   bordered={false} 
+                  value={userName}
+                  onChange={this.onChangeUser}
                   size="large" 
                   placeholder="账号:"
                   prefix={<IconFont type="icon-ic_user_platform" style={{fontSize: '25px',color: '#015266'}} />}
@@ -93,6 +104,8 @@ class Login extends React.Component {
               <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
                 <Input.Password
                   bordered={false} 
+                  value={passWord}
+                  onChange={this.onChangePass}
                   size="large" 
                   placeholder="密码:"
                   prefix={<IconFont type="icon-mimajiesuo" style={{fontSize: '25px',color: '#015266'}} />}
@@ -102,6 +115,7 @@ class Login extends React.Component {
               <div 
                 className="loginButton" 
                 style={{transform: ['translate(-50%,100%)'],color: '#FFFFFF',backgroundColor: '#015266'}}
+                onClick={this.Login}
               >登陆</div>
               <div 
                 style={{
