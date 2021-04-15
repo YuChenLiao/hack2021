@@ -1,63 +1,80 @@
 import React from 'react';
-import { Card, Calendar, Modal, List } from 'antd';
+import { Calendar, Modal, List, Badge } from 'antd';
 import moment from '../component/moment';
 import 'antd/dist/antd.css';
+import './mainPage.css'
 
-function MainPage() {
-  const [visible, setVisible] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
-
-  const [modalText, setModalText] = React.useState('Content of the modal');
-  function onChange(value) {
+class MainPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={
+      visible: false,
+      setVisible: false,
+      confirmLoading: false,
+      setConfirmLoading: false,
+      modalText: 'Content of the modal',
+      setModalText: 'Content of the modal',
+    }
+  }
+  onChange(value) {
     console.log(value._d);
-    showModal();
+    this.showModal();
   }
 
-  const showModal = () => {
-    setVisible(true);
+  showModal = () => {
+    this.setState({visible: true});
   };
 
-  const handleOk = () => {
-    setModalText('The modal will be closed after two seconds');
-    setConfirmLoading(true);
+  handleOk = () => {
+    this.setState({modalText:'The modal will be closed after two seconds'});
+    this.setState({setConfirmLoading: true});
     setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
+      this.setState({visible: false});
+      this.setState({setConfirmLoading:false});
     }, 2000);
   };
 
-  const handleCancel = () => {
+  handleCancel = () => {
     console.log('Clicked cancel button');
-    setVisible(false);
+    this.setState({visible: false});
   };
-        
-  return (
-    <div>
-      <Card>
-        <Calendar 
-          fullscreen={false} 
-          onChange={onChange}
-          headerRender={() => {
-            let date =  moment();
-            return (
-              <div>{date.format('LL')}</div>
-            )
-          }}
-        />
-      </Card>
-      <Modal
-        title="Title"
-        visible={visible}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
-        <p>{modalText}</p>
-      </Modal>
-      <List>
-      </List>
-    </div>
-  );
+
+  showBadge = (value) => {
+    const num = value.date();
+    return num ? (
+      <Badge status="success" offset={[5, 0]} color="#015266" />
+    ) : null;
+  }
+  render() {     
+    return (
+      <div className="mainBox">
+        <div className="clBox">
+          <Calendar 
+            fullscreen={false} 
+            onSelect={this.onChange}
+            headerRender={() => {
+              let date =  moment();
+              return (
+                <div className="clHeader">{date.format('LL')}</div>
+              )
+            }}
+            dateCellRender={this.showBadge}
+          />
+        </div>
+        <Modal
+          title="Title"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          confirmLoading={this.state.confirmLoading}
+          onCancel={this.state.handleCancel}
+        >
+          <p>{this.state.modalText}</p>
+        </Modal>
+        <List>
+        </List>
+      </div>
+    );
+  } 
 }
 
 export default MainPage;
