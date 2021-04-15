@@ -1,10 +1,7 @@
 import React from 'react';
 import { Card, Calendar, Modal, List } from 'antd';
+import moment from '../component/moment';
 import 'antd/dist/antd.css';
-
-function onPanelChange(value, mode) {
-  console.log(value, mode);
-}
 
 function MainPage() {
   const [visible, setVisible] = React.useState(false);
@@ -37,7 +34,16 @@ function MainPage() {
   return (
     <div>
       <Card>
-        <Calendar fullscreen={false} onPanelChange={onPanelChange} onChange={onChange}/>
+        <Calendar 
+          fullscreen={false} 
+          onChange={onChange}
+          headerRender={() => {
+            let date =  moment();
+            return (
+              <div>{date.format('LL')}</div>
+            )
+          }}
+        />
       </Card>
       <Modal
         title="Title"
