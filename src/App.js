@@ -4,19 +4,18 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Mainpage from './pages/mainPage';
-import FirstPage from './pages/firstPage';
-import UserPage from './pages/userPage';
 import Login from './pages/login';
+import privateRoutes from './routes/private'
+import AuthRoute from './routes/AuthRoute'
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/login" exact component={Login}/>
-        <Route path="/userPage" exact component={UserPage}/>
-        <Route path="/mainPage" exact component={Mainpage}/>
-        <Route path="/" component={FirstPage}/>
+        <Route path="/" exact component={Login}/>
+        {privateRoutes.map(
+          (route) => <AuthRoute key={route.path} {...route}/>
+        )}
       </Switch>
     </Router>
   );

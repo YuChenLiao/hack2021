@@ -1,8 +1,10 @@
 import React from 'react';
-import { Calendar, Modal, List, Badge } from 'antd';
+import { Calendar, Modal, List, Badge, Input, Upload } from 'antd';
 import moment from '../component/moment';
 import 'antd/dist/antd.css';
 import './mainPage.css'
+
+const { TextArea } = Input;
 
 class MainPage extends React.Component {
   constructor(props) {
@@ -11,14 +13,11 @@ class MainPage extends React.Component {
       visible: false,
       setVisible: false,
       confirmLoading: false,
-      setConfirmLoading: false,
-      modalText: 'Content of the modal',
-      setModalText: 'Content of the modal',
     }
   }
-  onChange(value) {
+  onChange = (value) => {
     console.log(value._d);
-    this.showModal();
+    this.setState({visible: true});
   }
 
   showModal = () => {
@@ -26,16 +25,14 @@ class MainPage extends React.Component {
   };
 
   handleOk = () => {
-    this.setState({modalText:'The modal will be closed after two seconds'});
-    this.setState({setConfirmLoading: true});
+    this.setState({confirmLoading: true})
     setTimeout(() => {
       this.setState({visible: false});
-      this.setState({setConfirmLoading:false});
-    }, 2000);
+      this.setState({confirmLoading: false})
+    }, 1000);
   };
 
   handleCancel = () => {
-    console.log('Clicked cancel button');
     this.setState({visible: false});
   };
 
@@ -62,13 +59,26 @@ class MainPage extends React.Component {
           />
         </div>
         <Modal
-          title="Title"
           visible={this.state.visible}
           onOk={this.handleOk}
+          okText="确定"
+          cancelText="取消"
+          bodyStyle={{backgroundColor: '#FFFFFF'}}
           confirmLoading={this.state.confirmLoading}
-          onCancel={this.state.handleCancel}
+          onCancel={this.handleCancel}
         >
-          <p>{this.state.modalText}</p>
+          <div style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}}>
+            <Input bordered={false} />
+          </div>
+          <div style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}}>
+            <TextArea bordered={false} autoSize={{ minRows: 3, maxRows: 5 }}/>
+          </div>
+          <div style={{marginTop: '20px'}}>
+            <Upload 
+              style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}} 
+              listType="picture-card"
+            >上传图片</Upload>
+          </div>
         </Modal>
         <List>
         </List>
