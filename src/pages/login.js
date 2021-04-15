@@ -1,6 +1,7 @@
 import React from 'react';
-import { Input } from 'antd';
+import { Input, message } from 'antd';
 import { createFromIconfontCN, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
+import {request} from '../component/request'
 import 'antd/dist/antd.css';
 import './login.css';
 
@@ -16,25 +17,50 @@ class Login extends React.Component {
       login: 'none',
       register: 'none',
       registerPrime: 'inline',
-      registerEnd: 'none'
+      registerEnd: 'none',
+      loginForm: {
+        userName: '',
+        passWord: '',
+      },
     }
-  }
+  };
   toLogin = () => {
     this.setState({login: 'inline'});
     this.setState({prime: 'none'});
     this.setState({register: 'none'});
     console.log(this.state.login)
-  }
+  };
   toRrgister = () =>{
     this.setState({login: 'none'});
     this.setState({prime: 'none'});
     this.setState({register: 'inline'});
-  }
-  registerComplete = () => {
-    this.setState({registerPrime: 'none'});
-    this.setState({registerEnd: 'inline'});
-  }
+  };
+  registerComplete = async() => {
+    const res = await request.post('/register/account',this.state.loginForm);
+    console.log(res.data);
+    if(res.data.success) {
+      this.setState({registerPrime: 'none'});
+      this.setState({registerEnd: 'inline'});
+    } else {
+      message.error('注册失败');
+    }
+  };
+  onChangeUser = ({ target: { value } }) => {
+    this.setState({ loginForm:{
+      userName: value,
+      passWord: this.state.loginForm.passWord,
+    } });
+    console.log(this.state);
+  };
+  onChangePass = ({ target: { value } }) => {
+    this.setState({ loginForm:{
+      userName: this.state.loginForm.userName,
+      passWord: value,
+    } });
+    console.log(this.state);
+  };
   render(){
+    const { userName, passWord} = this.state.loginForm;
     return (
       <div className="login">
         <div className="prime" style={{display:this.state.prime}}>
@@ -105,6 +131,8 @@ class Login extends React.Component {
               <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
                 <Input 
                   bordered={false} 
+                  value={userName}
+                  onChange={this.onChangeUser}
                   size="large" 
                   placeholder="用户名:"
                   prefix={<IconFont type="icon-ic_user_platform" style={{fontSize: '25px',color: '#015266'}} />}
@@ -113,6 +141,8 @@ class Login extends React.Component {
               <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
                 <Input.Password
                   bordered={false} 
+                  value={passWord}
+                  onChange={this.onChangePass}
                   size="large" 
                   placeholder="密码:"
                   prefix={<IconFont type="icon-mimajiesuo" style={{fontSize: '25px',color: '#015266'}} />}
