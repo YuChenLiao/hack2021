@@ -12,6 +12,7 @@
   background-color: aqua;
   left: 50%;
   border-radius: 10%;
+  overflow: hidden;
 }
 
 .showPic::before {
@@ -24,6 +25,20 @@
   position: absolute;
   top: 0; bottom: 0; right: 0; left: 0;
   height: 100%;
+  width: 100%;
+}
+
+.tip {
+  position: absolute;
+  bottom: 0;
+  height: 60px;
+  line-height: 60px;
+  text-align: right;
+  padding-right: 10px;
+  font-size: 30px;
+  background-color: rgba(167, 168, 168, 0.4);
+  transform: translate(-50%,0);
+  color: #FFFFFF;
   width: 100%;
 }
 

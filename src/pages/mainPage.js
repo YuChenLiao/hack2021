@@ -2,6 +2,7 @@ import React from 'react';
 import { Calendar, Modal, List, Badge, Input, Upload } from 'antd';
 import moment from '../component/moment';
 import 'antd/dist/antd.css';
+import {Arequest} from '../component/request'
 import './mainPage.css'
 
 const { TextArea } = Input;
@@ -13,7 +14,15 @@ class MainPage extends React.Component {
       visible: false,
       setVisible: false,
       confirmLoading: false,
+      dataList: [],
     }
+    this.initData();
+  };
+
+  initData = async() => {
+    const token = localStorage.getItem('token');
+    const res = await Arequest.get('/article/listArticle',token);
+    console.log(res);
   }
   onChange = (value) => {
     console.log(value._d);

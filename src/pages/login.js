@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, message } from 'antd';
 import { createFromIconfontCN, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
-import {request} from '../component/request'
+import {Arequest} from '../component/request'
 import 'antd/dist/antd.css';
 import './login.css';
 
@@ -18,9 +18,9 @@ class Login extends React.Component {
       register: 'none',
       registerPrime: 'inline',
       registerEnd: 'none',
-      loginForm: {
+      form: {
         userName: '',
-        passWord: '',
+        userPassword: '',
       },
     }
   };
@@ -28,7 +28,6 @@ class Login extends React.Component {
     this.setState({login: 'inline'});
     this.setState({prime: 'none'});
     this.setState({register: 'none'});
-    console.log(this.state.login)
   };
   toRrgister = () =>{
     this.setState({login: 'none'});
@@ -36,7 +35,7 @@ class Login extends React.Component {
     this.setState({register: 'inline'});
   };
   registerComplete = async() => {
-    const res = await request.post('/register/account',this.state.loginForm);
+    const res = await Arequest.post('/register/account',this.state.form);
     console.log(res.data);
     if(res.data.success) {
       this.setState({registerPrime: 'none'});
@@ -46,30 +45,32 @@ class Login extends React.Component {
     }
   };
   Login = async() =>{
-    const res = await request.post(' /user/login', this.state.loginForm)
-    localStorage.setItem('token',res.data.data.token);
+    console.log(this.state.form);
+    const res = await Arequest.post('/user/login', this.state.form, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+    console.log(res);
     if(res.data.data.token) {
+      localStorage.setItem('token',res.data.data.token);
       this.props.history.push('/firstPage')
     } else {
       message.error('登陆失败')
     }
   }
   onChangeUser = ({ target: { value } }) => {
-    this.setState({ loginForm:{
+    this.setState({ form:{
       userName: value,
-      passWord: this.state.loginForm.passWord,
+      userPassword: this.state.form.userPassword,
     } });
     console.log(this.state);
   };
   onChangePass = ({ target: { value } }) => {
-    this.setState({ loginForm:{
-      userName: this.state.loginForm.userName,
-      passWord: value,
+    this.setState({ form:{
+      userName: this.state.form.userName,
+      userPassword: value,
     } });
     console.log(this.state);
   };
   render(){
-    const { userName, passWord} = this.state.loginForm;
+    const { userName, userPassword} = this.state.form;
     return (
       <div className="login">
         <div className="prime" style={{display:this.state.prime}}>
@@ -104,7 +105,7 @@ class Login extends React.Component {
               <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
                 <Input.Password
                   bordered={false} 
-                  value={passWord}
+                  value={userPassword}
                   onChange={this.onChangePass}
                   size="large" 
                   placeholder="密码:"
@@ -155,7 +156,7 @@ class Login extends React.Component {
               <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
                 <Input.Password
                   bordered={false} 
-                  value={passWord}
+                  value={userPassword}
                   onChange={this.onChangePass}
                   size="large" 
                   placeholder="密码:"

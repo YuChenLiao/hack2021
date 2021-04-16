@@ -6,11 +6,11 @@ function AuthRoute(props) {
     backUrl,
     ...otherProps
   } = props;
-  console.log(otherProps);
 
   const token = localStorage.getItem('token')
+  console.log(token);
   // 如果用户有权限，就渲染对应的路由
-  if (token) {
+  if (1) {
     return <Route {...otherProps} />
   } else {
     // 如果没有权限，返回配置的默认路由
