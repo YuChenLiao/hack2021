@@ -23,7 +23,12 @@ class Login extends React.Component {
         password: '',
       },
     }
+    this.checkRoute();
   };
+  checkRoute = () => {
+    const temp = localStorage.getItem('token');
+    if (temp) this.props.history.push('/firstPage');
+  }
   toLogin = () => {
     this.setState({login: 'inline'});
     this.setState({prime: 'none'});
@@ -46,8 +51,10 @@ class Login extends React.Component {
   };
   Login = async() =>{
     console.log(this.state.form);
-    const res = await Arequest.post('/user/login', this.state.form, {headers: {'Content-Type': 'application/json'}})
-    console.log(res);
+    const res = await Arequest.post(
+      '/user/login?password='+this.state.form.password+'&userName='+this.state.form.userName, 
+      this.state.form, {headers: {'Content-Type': 'application/json'}}
+    )
     if(res.data.data.token) {
       localStorage.setItem('token',res.data.data.token);
       this.props.history.push('/firstPage')
