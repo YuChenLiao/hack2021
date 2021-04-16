@@ -1,11 +1,10 @@
 import React from 'react';
-import { Calendar, Modal, List, Badge, Input, Upload } from 'antd';
-import moment from '../component/moment';
+import { Calendar, List, Badge } from 'antd';
+import moment from '../service/moment';
 import 'antd/dist/antd.css';
-import {Arequest} from '../component/request'
+import {Arequest} from '../service/request'
+import Pop from '../component/pop'
 import './mainPage.css'
-
-const { TextArea } = Input;
 
 class MainPage extends React.Component {
   constructor(props) {
@@ -67,28 +66,11 @@ class MainPage extends React.Component {
             dateCellRender={this.showBadge}
           />
         </div>
-        <Modal
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          okText="确定"
-          cancelText="取消"
-          bodyStyle={{backgroundColor: '#FFFFFF'}}
+        <Pop 
+          visible={this.state.visible} 
           confirmLoading={this.state.confirmLoading}
-          onCancel={this.handleCancel}
-        >
-          <div style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}}>
-            <Input bordered={false} />
-          </div>
-          <div style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}}>
-            <TextArea bordered={false} autoSize={{ minRows: 3, maxRows: 5 }}/>
-          </div>
-          <div style={{marginTop: '20px'}}>
-            <Upload 
-              style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}} 
-              listType="picture-card"
-            >上传图片</Upload>
-          </div>
-        </Modal>
+          method={this}
+        />
         <List>
         </List>
       </div>

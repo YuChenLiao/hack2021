@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, message } from 'antd';
 import { createFromIconfontCN, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
-import {Arequest} from '../component/request'
+import {Arequest} from '../service/request'
 import 'antd/dist/antd.css';
 import './login.css';
 
@@ -20,7 +20,7 @@ class Login extends React.Component {
       registerEnd: 'none',
       form: {
         userName: '',
-        userPassword: '',
+        password: '',
       },
     }
   };
@@ -46,7 +46,7 @@ class Login extends React.Component {
   };
   Login = async() =>{
     console.log(this.state.form);
-    const res = await Arequest.post('/user/login', this.state.form, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+    const res = await Arequest.post('/user/login', this.state.form, {headers: {'Content-Type': 'application/json'}})
     console.log(res);
     if(res.data.data.token) {
       localStorage.setItem('token',res.data.data.token);
@@ -58,19 +58,19 @@ class Login extends React.Component {
   onChangeUser = ({ target: { value } }) => {
     this.setState({ form:{
       userName: value,
-      userPassword: this.state.form.userPassword,
+      password: this.state.form.password,
     } });
     console.log(this.state);
   };
   onChangePass = ({ target: { value } }) => {
     this.setState({ form:{
       userName: this.state.form.userName,
-      userPassword: value,
+      password: value,
     } });
     console.log(this.state);
   };
   render(){
-    const { userName, userPassword} = this.state.form;
+    const { userName, password} = this.state.form;
     return (
       <div className="login">
         <div className="prime" style={{display:this.state.prime}}>
@@ -105,7 +105,7 @@ class Login extends React.Component {
               <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
                 <Input.Password
                   bordered={false} 
-                  value={userPassword}
+                  value={password}
                   onChange={this.onChangePass}
                   size="large" 
                   placeholder="密码:"
@@ -156,7 +156,7 @@ class Login extends React.Component {
               <div style={{borderBottomStyle: 'solid',borderBottomColor: '#CB5920',borderWidth: '2px',marginTop: '15px'}}>
                 <Input.Password
                   bordered={false} 
-                  value={userPassword}
+                  value={password}
                   onChange={this.onChangePass}
                   size="large" 
                   placeholder="密码:"

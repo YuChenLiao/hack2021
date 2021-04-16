@@ -1,27 +1,33 @@
 import React from 'react';
-import { Button, Modal, Input, Upload } from 'antd';
+import { Button } from 'antd';
 import 'antd/dist/antd.css';
-import {Arequest} from '../component/request'
+import {Arequest} from '../service/request'
+import Pop from '../component/pop'
 import './firstPage.css'
+import moment from 'moment';
 
-const { TextArea } = Input;
 class FirstPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showTips: 'none',
       visible: false,
-      setVisible: false,
       confirmLoading: false,
-      setConfirmLoading: false,
       showForm: {
         picUrl: '',
         picTxt: '',
+        img:File,
+        date: moment(),
       },
+      textForm: {
+        title: '',
+        
+      }
     }
   }
   componentDidMount() {
-    this.initData()
+    this.initData();
+    console.log(moment());
   }
 
   initData = async() => {
@@ -42,7 +48,6 @@ class FirstPage extends React.Component {
   showModal = () => {
     this.setState({visible:true});
   };
-
   handleOk = () => {
     this.setState({confirmLoading:true});
     setTimeout(() => {
@@ -74,7 +79,7 @@ class FirstPage extends React.Component {
             onMouseLeave={this.changeTipsNone}
           ></img>
           <div className="tip" style={{display: this.state.showTips}}>
-            {this.state.showForm.picTxt}1111
+            {this.state.showForm.picTxt}
           </div>
         </div>
         <Button 
@@ -84,28 +89,11 @@ class FirstPage extends React.Component {
           className="touch"
           onClick={this.onChange}
         >记录今日美好</Button>
-        <Modal
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          okText="确定"
-          cancelText="取消"
-          bodyStyle={{backgroundColor: '#FFFFFF'}}
+        <Pop 
+          visible={this.state.visible} 
           confirmLoading={this.state.confirmLoading}
-          onCancel={this.handleCancel}
-        >
-          <div style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}}>
-            <Input bordered={false} />
-          </div>
-          <div style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}}>
-            <TextArea bordered={false} autoSize={{ minRows: 3, maxRows: 5 }}/>
-          </div>
-          <div style={{marginTop: '20px'}}>
-            <Upload 
-              style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}} 
-              listType="picture-card"
-            >上传图片</Upload>
-          </div>
-        </Modal>
+          method={this}
+        />
       </div>
     );
   }
