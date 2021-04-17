@@ -20,8 +20,9 @@ class Login extends React.Component {
       registerEnd: 'none',
       form: {
         userName: '',
-        password: '',
+        password: ''
       },
+      repeatPass: '',
     }
     this.checkRoute();
   };
@@ -40,8 +41,16 @@ class Login extends React.Component {
     this.setState({register: 'inline'});
   };
   registerComplete = async() => {
-    const res = await Arequest.post('/register/account',this.state.form);
-    console.log(res.data);
+    if(this.state.repeatPass !== this.state.form.password){
+      message.error({title: '重复应与原密码相同'});
+      return;
+    }
+    const res = await Arequest.post(
+      '/register/account',
+      {headers: {'Content-Type': 'application/x-www-form-urlencoded'}},
+      this.state.form, 
+    );
+    console.log(res);
     if(res.data.success) {
       this.setState({registerPrime: 'none'});
       this.setState({registerEnd: 'inline'});
@@ -53,8 +62,10 @@ class Login extends React.Component {
     console.log(this.state.form);
     const res = await Arequest.post(
       '/user/login?password='+this.state.form.password+'&userName='+this.state.form.userName, 
-      this.state.form, {headers: {'Content-Type': 'application/json'}}
+      {headers: {'Content-Type': 'application/x-www-form-urlencoded'}},
+      this.state.form,
     )
+    console.log(res)
     if(res.data.data.token) {
       localStorage.setItem('token',res.data.data.token);
       this.props.history.push('/firstPage')
@@ -67,14 +78,19 @@ class Login extends React.Component {
       userName: value,
       password: this.state.form.password,
     } });
-    console.log(this.state);
   };
   onChangePass = ({ target: { value } }) => {
     this.setState({ form:{
       userName: this.state.form.userName,
       password: value,
     } });
-    console.log(this.state);
+  };
+  checkPassword = ({ target: { value } }) => {
+    this.setState({repeatPass: value})
+    if(value !== this.state.form.password){
+      return false;
+    }
+    else return true;
   };
   render(){
     const { userName, password} = this.state.form;
@@ -174,6 +190,7 @@ class Login extends React.Component {
                 <Input.Password 
                   bordered={false} 
                   size="large" 
+                  onChange={this.checkPassword}
                   placeholder="重复密码:"
                   prefix={<IconFont type="icon-mimajiesuo" style={{fontSize: '25px',color: '#015266'}} />}
                 />

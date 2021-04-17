@@ -10,8 +10,8 @@ class Pop extends React.Component{
     super(props);
     this.state = {
       textForm: {
-        title: '',
-        content: '',
+        title: '由于接口出了亿点小问题',
+        content: '该功能暂时不开放，非常抱歉',
         img: [],
         date: moment(),
       },
@@ -39,6 +39,9 @@ class Pop extends React.Component{
     
     console.log(this.state.textForm.img)
   }
+  handleText = () => {
+    
+  }
   render() {
     return(
       <Modal
@@ -55,6 +58,7 @@ class Pop extends React.Component{
             bordered={false} 
             value={this.state.textForm.title}
             onChange={this.handleTitle}
+            disabled={true}
           />
         </div>
         <div style={{backgroundColor: '#F9F9F9',borderRadius: '5px',marginTop: '20px'}}>
@@ -63,6 +67,7 @@ class Pop extends React.Component{
             autoSize={{ minRows: 3, maxRows: 5 }}
             value={this.state.textForm.content}
             onChange={this.handleContent}
+            disabled={true}
           />
         </div>
         <div style={{marginTop: '20px'}}>
@@ -81,8 +86,10 @@ class Pop extends React.Component{
                 checkType(file, ['image/png', 'image/jpeg']),
               ])
             }}
+            action="http://47.102.220.227:8080/article/file"
             onChange={this.handleImg}
             maxCount={3}
+            disabled={true}
           >上传图片</Upload>
         </div>
       </Modal>

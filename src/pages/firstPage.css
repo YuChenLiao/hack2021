@@ -9,7 +9,7 @@
   position: absolute;
   transform: translate(-50%,35%);
   width: 300px;
-  background-color: aqua;
+  background-color: rgb(185, 192, 192);
   left: 50%;
   border-radius: 10%;
   overflow: hidden;

@@ -6,8 +6,7 @@ function AuthRoute(props) {
     backUrl,
     ...otherProps
   } = props;
-
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
   // 如果用户有权限，就渲染对应的路由
   if (token) {
     return <Route {...otherProps} />

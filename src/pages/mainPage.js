@@ -14,14 +14,16 @@ class MainPage extends React.Component {
       setVisible: false,
       confirmLoading: false,
       dataList: [],
+      dateList: [1,5,3,7,4]
     }
     this.initData();
   };
 
   initData = async() => {
-    const token = localStorage.getItem('token');
-    const res = await Arequest.get('/article/listArticle',token);
-    console.log(res);
+    const res = await Arequest.get('/article/listArticle');
+    if(res) {
+      this.setState({dataList: res.data});
+    }
   }
   onChange = (value) => {
     console.log(value._d);
@@ -45,10 +47,16 @@ class MainPage extends React.Component {
   };
 
   showBadge = (value) => {
-    const num = value.date();
+    let num = false;
+    this.state.dateList.forEach((item) => {
+      if(item === value.date())
+        num = true;
+    }) 
     return num ? (
       <Badge status="success" offset={[5, 0]} color="#015266" />
-    ) : null;
+    ) : (
+      <Badge status="success" offset={[5, 0]} color="#FFFFFF" />
+    );
   }
   render() {     
     return (
