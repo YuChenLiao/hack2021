@@ -6,7 +6,7 @@ import 'antd/dist/antd.css';
 import './login.css';
 
 const IconFont = createFromIconfontCN({
-  scriptUrl:'//at.alicdn.com/t/font_2487842_uleaa2uzsw.js',
+  scriptUrl:'//at.alicdn.com/t/font_2487842_1vkrzldtkno.js',
 });
 
 class Login extends React.Component {
@@ -46,11 +46,10 @@ class Login extends React.Component {
       return;
     }
     const res = await Arequest.post(
-      '/register/account',
+      '/register/account?password='+this.state.form.password+'userName='+this.state.form.userName,
       {headers: {'Content-Type': 'application/x-www-form-urlencoded'}},
       this.state.form, 
     );
-    console.log(res);
     if(res.data.success) {
       this.setState({registerPrime: 'none'});
       this.setState({registerEnd: 'inline'});
@@ -59,13 +58,11 @@ class Login extends React.Component {
     }
   };
   Login = async() =>{
-    console.log(this.state.form);
     const res = await Arequest.post(
       '/user/login?password='+this.state.form.password+'&userName='+this.state.form.userName, 
       {headers: {'Content-Type': 'application/x-www-form-urlencoded'}},
       this.state.form,
     )
-    console.log(res)
     if(res.data.data.token) {
       localStorage.setItem('token',res.data.data.token);
       this.props.history.push('/firstPage')

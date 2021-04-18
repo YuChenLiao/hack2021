@@ -27,12 +27,10 @@ class FirstPage extends React.Component {
   }
   componentDidMount() {
     this.initData();
-    console.log(moment());
   }
 
   initData = async() => {
     let res = await Arequest.get('/getRandPic');
-    console.log(res.data);
     const pic = res.data.picUrl;
     const text = res.data.pic_text;
     this.setState({showForm: {
@@ -61,11 +59,9 @@ class FirstPage extends React.Component {
   };
   changeTips = () => {
     this.setState({showTips: 'inline'});
-    console.log(this.state.showTips);
   }
   changeTipsNone = () => {
     this.setState({showTips: 'none'});
-    console.log(this.state.showTips);
   }
   render() {
     return (
